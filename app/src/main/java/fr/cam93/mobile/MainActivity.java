@@ -207,6 +207,26 @@ public class MainActivity extends Activity {
         FrameLayout hero = new FrameLayout(this);
         hero.setBackground(rounded(NAVY, 17));
         hero.setClipToOutline(true);
+
+        android.widget.ImageView photo = new android.widget.ImageView(this);
+        photo.setImageResource(R.drawable.hero_sprint);
+        photo.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+        photo.setContentDescription("Photo d'illustration d'un sprint sur piste");
+        hero.addView(photo, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+
+        View leftShade = new View(this);
+        leftShade.setBackground(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,
+                new int[]{0xF207162C, 0xBD07162C, 0x4407162C, 0x1207162C}));
+        hero.addView(leftShade, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+
+        View bottomShade = new View(this);
+        bottomShade.setBackground(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{0x0007162C, 0x2207162C, 0xD907162C}));
+        hero.addView(bottomShade, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+
         TrackHeroView illustration = new TrackHeroView(this);
         hero.addView(illustration, new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
