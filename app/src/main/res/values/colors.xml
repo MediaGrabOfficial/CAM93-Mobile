@@ -1,0 +1,7 @@
+<resources>
+    <color name="cam_navy">#062B59</color>
+    <color name="cam_yellow">#FFD51E</color>
+    <color name="cam_background">#F4F6F9</color>
+    <color name="cam_text">#162338</color>
+    <color name="cam_muted">#667085</color>
+</resources>
