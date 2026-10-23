@@ -172,7 +172,7 @@ public class MainActivity extends Activity {
 
         TextView label = text("LE CLUB • L'HISTOIRE • L'AMBITION", 10, YELLOW, true);
         hero.addView(label);
-        TextView headline = text("Un club.\\nUne passion.\\nMontreuil.", 30, WHITE, true);
+        TextView headline = text("Un club.\nUne passion.\nMontreuil.", 30, WHITE, true);
         headline.setLineSpacing(-dp(1), 1f);
         LinearLayout.LayoutParams headlineParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -381,7 +381,7 @@ public class MainActivity extends Activity {
         card.setBackground(rounded(NAVY, 19));
 
         card.addView(text("Une question ?", 20, WHITE, true));
-        TextView details = text("CA Montreuil 93\\n21 rue des Grands Pêchers\\n93100 Montreuil", 13, 0xFFE8EDF5, false);
+        TextView details = text("CA Montreuil 93\n21 rue des Grands Pêchers\n93100 Montreuil", 13, 0xFFE8EDF5, false);
         LinearLayout.LayoutParams detailsParams = matchWrap();
         detailsParams.topMargin = dp(8);
         card.addView(details, detailsParams);
@@ -424,7 +424,7 @@ public class MainActivity extends Activity {
         pageContent.addView(line, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, dp(1)));
         addSpace(12);
-        TextView footer = text("CAM93 MOBILE  •  Application non officielle\\nContenus et services : cam93.org", 10, MUTED, false);
+        TextView footer = text("CAM93 MOBILE  •  Application non officielle\nContenus et services : cam93.org", 10, MUTED, false);
         footer.setGravity(Gravity.CENTER);
         footer.setLineSpacing(dp(3), 1f);
         pageContent.addView(footer, matchWrap());
