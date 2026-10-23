@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 
     private static final String HOME = "https://cam93.org/";
     private static final String NEWS = "https://cam93.org/news/";
-    private static final String SIGNUP = "https://cam93.org/inscription/inscription-en-ligne/";
+    private static final String SIGNUP = "https://cam93.org/inscription/";
     private static final String YOUNG_GROUPS = "https://cam93.org/inscription/groupes-jeunes/";
     private static final String SPECIALTIES = "https://cam93.org/inscription/groupes-de-specialites/";
     private static final String ATHLETES = "https://cam93.org/athletes/";
