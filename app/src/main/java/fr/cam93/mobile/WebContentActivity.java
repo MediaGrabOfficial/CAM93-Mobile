@@ -150,12 +150,12 @@ public class WebContentActivity extends Activity {
                 popup.setWebViewClient(new WebViewClient() {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView ignored, WebResourceRequest request) {
-                        return routeUrl(request.getUrl().toString());
+                        return openExternal(request.getUrl());
                     }
 
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView ignored, String url) {
-                        return routeUrl(url);
+                        return openExternal(Uri.parse(url));
                     }
                 });
                 WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
