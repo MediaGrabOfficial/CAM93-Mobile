@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowInsets;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -56,7 +57,7 @@ public class MainActivity extends Activity {
     private LinearLayout pageContent;
     private Bitmap cachedLogo;
     private boolean logoLoading = false;
-    private Runner3DView runner3DView;
+    private TrackMotionView trackMotionView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,10 +71,7 @@ public class MainActivity extends Activity {
     }
 
     private void render() {
-        if (runner3DView != null) {
-            runner3DView.onPause();
-            runner3DView = null;
-        }
+        trackMotionView = null;
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(WHITE);
@@ -107,6 +105,7 @@ public class MainActivity extends Activity {
         else if (currentTab == 1) showNews();
         else if (currentTab == 2) showClub();
         else showMenu();
+        animatePageEntrance();
     }
 
     private View createHeader() {
@@ -260,10 +259,10 @@ public class MainActivity extends Activity {
         hero.setBackground(rounded(NAVY, 7));
         hero.setClipToOutline(true);
 
-        runner3DView = new Runner3DView(this);
+        trackMotionView = new TrackMotionView(this);
         FrameLayout.LayoutParams modelParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        hero.addView(runner3DView, modelParams);
+        hero.addView(trackMotionView, modelParams);
 
         LinearLayout copy = new LinearLayout(this);
         copy.setOrientation(LinearLayout.VERTICAL);
@@ -273,13 +272,13 @@ public class MainActivity extends Activity {
         TextView label = text("CA MONTREUIL 93", 10, YELLOW, true);
         copy.addView(label);
 
-        TextView title = text("L’athlétisme\nqui avance.", 26, WHITE, true);
+        TextView title = text("L’athlétisme\nà Montreuil.", 25, WHITE, true);
         title.setLineSpacing(0, 1f);
         LinearLayout.LayoutParams titleParams = wrap();
         titleParams.topMargin = dp(11);
         copy.addView(title, titleParams);
 
-        TextView subtitle = text("Montreuil depuis 1943", 12, 0xFFE3EAF3, false);
+        TextView subtitle = text("UN CLUB DEPUIS 1943", 10, 0xFFE3EAF3, true);
         LinearLayout.LayoutParams subtitleParams = wrap();
         subtitleParams.topMargin = dp(9);
         copy.addView(subtitle, subtitleParams);
@@ -298,7 +297,7 @@ public class MainActivity extends Activity {
         hero.addView(copy, copyParams);
 
         LinearLayout.LayoutParams heroParams = match();
-        heroParams.height = dp(318);
+        heroParams.height = dp(300);
         pageContent.addView(hero, heroParams);
         addSpace(15);
 
@@ -432,16 +431,21 @@ public class MainActivity extends Activity {
         pageContent.addView(note, match());
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (runner3DView != null) runner3DView.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        if (runner3DView != null) runner3DView.onPause();
-        super.onPause();
+    private void animatePageEntrance() {
+        if (pageContent == null) return;
+        DecelerateInterpolator easing = new DecelerateInterpolator(1.4f);
+        for (int i = 0; i < pageContent.getChildCount(); i++) {
+            View child = pageContent.getChildAt(i);
+            child.setAlpha(0f);
+            child.setTranslationY(dp(7));
+            child.animate()
+                    .alpha(1f)
+                    .translationY(0f)
+                    .setDuration(250L)
+                    .setStartDelay(Math.min(i * 12L, 180L))
+                    .setInterpolator(easing)
+                    .start();
+        }
     }
 
     private void addFooter() {
