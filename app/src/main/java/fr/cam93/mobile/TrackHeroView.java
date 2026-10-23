@@ -146,7 +146,6 @@ public final class TrackHeroView extends View {
         canvas.drawText("93", w * 0.86f, h * 0.17f + dp(5), paint);
 
         paint.setTextSize(dp(7));
-        paint.setLetterSpacingSafe(0);
         paint.setColor(0xFFFFD31F);
         paint.setTextAlign(Paint.Align.RIGHT);
         canvas.drawText("VITESSE  /  COLLECTIF  /  MONTREUIL", w - dp(15), h - dp(16), paint);
