@@ -40,6 +40,14 @@ jobs:
           "$SDKMANAGER" --sdk_root="$SDK_ROOT" "platforms;android-35" "build-tools;35.0.0" "platform-tools"
           echo "$SDK_ROOT/platform-tools" >> "$GITHUB_PATH"
 
+      - name: Télécharger la photo sportive du bandeau
+        run: |
+          mkdir -p app/src/main/res/drawable-nodpi
+          curl --fail --location --retry 3 --max-time 45 \
+            'https://images.pexels.com/photos/5457970/pexels-photo-5457970.jpeg?auto=compress&dpr=1&h=1200&w=1800' \
+            --output app/src/main/res/drawable-nodpi/hero_sprint.jpg
+          test -s app/src/main/res/drawable-nodpi/hero_sprint.jpg
+
       - name: Compiler l'APK Debug
         run: gradle --no-daemon assembleDebug
 
