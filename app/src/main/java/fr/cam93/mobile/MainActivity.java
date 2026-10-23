@@ -56,6 +56,7 @@ public class MainActivity extends Activity {
     private LinearLayout pageContent;
     private Bitmap cachedLogo;
     private boolean logoLoading = false;
+    private Runner3DView runner3DView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,10 @@ public class MainActivity extends Activity {
     }
 
     private void render() {
+        if (runner3DView != null) {
+            runner3DView.onPause();
+            runner3DView = null;
+        }
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(WHITE);
@@ -251,31 +256,51 @@ public class MainActivity extends Activity {
         pageContent.addView(eyebrow);
         addSpace(8);
 
-        LinearLayout hero = new LinearLayout(this);
-        hero.setOrientation(LinearLayout.VERTICAL);
-        hero.setPadding(dp(18), dp(18), dp(18), dp(17));
+        FrameLayout hero = new FrameLayout(this);
         hero.setBackground(rounded(NAVY, 7));
+        hero.setClipToOutline(true);
 
-        TextView title = text("L’athlétisme à Montreuil\ndepuis 1943", 25, WHITE, true);
+        runner3DView = new Runner3DView(this);
+        FrameLayout.LayoutParams modelParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        hero.addView(runner3DView, modelParams);
+
+        LinearLayout copy = new LinearLayout(this);
+        copy.setOrientation(LinearLayout.VERTICAL);
+        copy.setGravity(Gravity.CENTER_VERTICAL);
+        copy.setPadding(dp(17), dp(15), 0, dp(15));
+
+        TextView label = text("CA MONTREUIL 93", 10, YELLOW, true);
+        copy.addView(label);
+
+        TextView title = text("L’athlétisme\nqui avance.", 26, WHITE, true);
         title.setLineSpacing(0, 1f);
-        hero.addView(title);
+        LinearLayout.LayoutParams titleParams = wrap();
+        titleParams.topMargin = dp(11);
+        copy.addView(title, titleParams);
 
-        TextView subtitle = text("Vice-champion de France des Clubs Élite 2026", 13, 0xFFE3EAF3, false);
-        LinearLayout.LayoutParams sp = wrap();
-        sp.topMargin = dp(10);
-        hero.addView(subtitle, sp);
+        TextView subtitle = text("Montreuil depuis 1943", 12, 0xFFE3EAF3, false);
+        LinearLayout.LayoutParams subtitleParams = wrap();
+        subtitleParams.topMargin = dp(9);
+        copy.addView(subtitle, subtitleParams);
 
-        TextView button = text("DÉCOUVRIR LE CLUB  →", 12, NAVY, true);
+        TextView button = text("DÉCOUVRIR LE CLUB  →", 11, NAVY, true);
         button.setGravity(Gravity.CENTER);
-        button.setPadding(dp(13), dp(11), dp(13), dp(11));
+        button.setPadding(dp(11), dp(11), dp(11), dp(11));
         button.setBackground(rounded(YELLOW, 4));
-        LinearLayout.LayoutParams bp = wrap();
-        bp.topMargin = dp(16);
-        hero.addView(button, bp);
+        LinearLayout.LayoutParams buttonParams = wrap();
+        buttonParams.topMargin = dp(17);
+        copy.addView(button, buttonParams);
         button.setOnClickListener(v -> openWeb(HISTORY, "Histoire du club"));
 
-        pageContent.addView(hero, wrap());
-        addSpace(6);
+        FrameLayout.LayoutParams copyParams = new FrameLayout.LayoutParams(
+                dp(198), FrameLayout.LayoutParams.MATCH_PARENT, Gravity.START | Gravity.TOP);
+        hero.addView(copy, copyParams);
+
+        LinearLayout.LayoutParams heroParams = match();
+        heroParams.height = dp(318);
+        pageContent.addView(hero, heroParams);
+        addSpace(15);
 
         addSectionTitle("À LA UNE");
         addRow("Les actualités du CAM93", "News, bilans et vie du club", NEWS);
@@ -405,6 +430,18 @@ public class MainActivity extends Activity {
         note.setPadding(dp(12), dp(12), dp(12), dp(12));
         note.setBackground(rounded(0xFFFFF6C7, 5));
         pageContent.addView(note, match());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (runner3DView != null) runner3DView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        if (runner3DView != null) runner3DView.onPause();
+        super.onPause();
     }
 
     private void addFooter() {
