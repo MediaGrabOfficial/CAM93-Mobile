@@ -315,7 +315,8 @@ public class MainActivity extends Activity {
     private View statDivider() {
         View divider = new View(this);
         divider.setBackgroundColor(LINE);
-        return new LinearLayout.LayoutParams(dp(1), dp(35)).width > 0 ? divider : divider;
+        divider.setLayoutParams(new LinearLayout.LayoutParams(dp(1), dp(35)));
+        return divider;
     }
 
     private View quickAction(String number, String title, String detail, String url) {
